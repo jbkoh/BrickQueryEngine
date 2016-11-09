@@ -27,7 +27,7 @@ WHERE {
     ?zone rdf:type brick:HVAC_Zone .
     ?room rdf:type brick:Room .
 
-    #?vav bf:feeds+ ?zone .
+    #?vav bf:feeds+ ?zone . #Removed these as these are not defined in EBU3B of UCSD
     #?zone bf:hasPart ?room .
 
 }
