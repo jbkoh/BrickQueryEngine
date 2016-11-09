@@ -11,15 +11,7 @@ import (
 
 func main() {
     
-    // Init Mongodb connection via mgo.
-    /*
-    session, err := mgo.Dial("127.0.0.1:27017")
-    if err !=nil{
-        panic(err)
-    }
-    defer session.Close()
-    c := session.DB("Brick").C("QueryDictionary")
-    */
+    // Init Mongodb connection
     mongoConn := dbconn.NewMongoConn("127.0.0.1:27017")
     
     // Read query files and store queries into mongodb.
@@ -33,8 +25,8 @@ func main() {
         fmt.Println(qName)
     }
     
+    // choose sample query
     queryName := "test_query"
-    fmt.Println(queryName)
     
     // Init Fuseki Connector. Send SPARQL query string to the connector.
     fuseki := tripleconn.NewFusekiConnector("http://localhost:3030/brick")
