@@ -1,0 +1,31 @@
+PREFIX rdf: <http://wwww3org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://wwww3org/2000/01/rdf-schema#> 
+PREFIX bf: <http://buildsys.org/ontologies/BrickFrame#>
+PREFIX brick: <http://buildsys.org/ontologies/Brick#> 
+PREFIX btag: <http://buildsys.org/ontologies/BrickTag#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX soda_hall: <http://buildsys.org/ontologies/building_example#> 
+
+SELECT DISTINCT ?light_equip ?light_state ?light_cmd ?room
+WHERE {
+
+    # OR do we do ?light_equip rdf:type brick:Lighting_System
+    ?light_equip rdf:type/rdfs:subClassOf* brick:Lighting_System .
+
+    ?light_equip bf:feeds ?zone .
+    ?zone rdf:type brick:Lighting_Zone .
+    ?zone bf:contains ?room .
+    ?room rdf:type brick:Room .
+
+    ?light_state rdf:type/rdfs:subClassOf* brick:Luminance_Status .
+    ?light_cmd rdf:type/rdfs:subClassOf* brick:Luminance_Command .
+
+    {?light_equip bf:hasPoint ?light_state}
+    UNION
+    {?zone bf:hasPoint ?light_state}
+
+    {?light_equip bf:hasPoint ?light_cmd}
+    UNION
+    {?zone bf:hasPoint ?light_cmd}
+}

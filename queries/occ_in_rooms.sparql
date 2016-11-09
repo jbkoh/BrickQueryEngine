@@ -1,0 +1,16 @@
+PREFIX rdf: <http://wwww3org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://wwww3org/2000/01/rdf-schema#> 
+PREFIX bf: <http://buildsys.org/ontologies/BrickFrame#>
+PREFIX brick: <http://buildsys.org/ontologies/Brick#> 
+PREFIX btag: <http://buildsys.org/ontologies/BrickTag#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX soda_hall: <http://buildsys.org/ontologies/building_example#> 
+
+SELECT ?sensor ?room
+WHERE {
+    ?sensor rdf:type/rdfs:subClassOf* brick:Occupancy_Sensor . 
+    ?room rdf:type brick:Room .
+    ?sensor bf:isLocatedIn ?room .
+    ?sensor bf:isPointOf ?room .
+}

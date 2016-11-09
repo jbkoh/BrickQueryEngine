@@ -1,0 +1,39 @@
+PREFIX rdf: <http://wwww3org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://wwww3org/2000/01/rdf-schema#> 
+PREFIX bf: <http://buildsys.org/ontologies/BrickFrame#>
+PREFIX brick: <http://buildsys.org/ontologies/Brick#> 
+PREFIX btag: <http://buildsys.org/ontologies/BrickTag#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX soda_hall: <http://buildsys.org/ontologies/building_example#> 
+
+
+SELECT DISTINCT ?sensor ?room
+WHERE {
+
+    { ?sensor rdf:type/rdfs:subClassOf* brick:Zone_Temperature_Sensor . }
+        UNION
+    { ?sensor rdf:type/rdfs:subClassOf* brick:Discharge_Air_Temperature_Sensor . }
+    UNION
+    { ?sensor rdf:type/rdfs:subClassOf* brick:Occupancy_Sensor . }
+        UNION
+    { ?sensor rdf:type/rdfs:subClassOf* brick:CO2_Sensor . }
+
+    {?sensor bf:isPointOf ?vav }
+    UNION
+    {?sensor bf:isPointOf ?room }
+	
+	?vav rdf:type brick:VAV .
+    ?zone rdf:type brick:HVAC_Zone .
+    ?room rdf:type brick:Room .
+
+    #?vav bf:feeds+ ?zone .
+    #?zone bf:hasPart ?room .
+
+}
+
+
+ebu3b:EBU3B_VAV_Rm_B102C a brick:VAV ;
+    brickframe:feeds ebu3b:EBU3B_HVAC_Zone_Rm_B102C .
+	
+ebu3b:EBU3B_HVAC_Zone_Rm_B102C a brick:HVAC_Zone ;
