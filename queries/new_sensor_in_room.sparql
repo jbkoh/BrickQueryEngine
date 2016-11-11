@@ -19,13 +19,14 @@ WHERE {
         UNION
     { ?sensor rdf:type/rdfs:subClassOf* brick:CO2_Sensor . }
 
-    {?sensor bf:isPointOf ?vav }
+    {?sensor bf:isPointOf ?vav.
+	 ?vav rdf:type brick:VAV .
+	}
     UNION
-    {?sensor bf:isPointOf ?room }
-	
-	?vav rdf:type brick:VAV .
-    ?zone rdf:type brick:HVAC_Zone .
+    {?sensor bf:isPointOf ?room .
+	?zone rdf:type brick:HVAC_Zone .
     ?room rdf:type brick:Room .
+	}
 
     #?vav bf:feeds+ ?zone . #Removed these as these are not defined in EBU3B of UCSD
     #?zone bf:hasPart ?room .
